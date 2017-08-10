@@ -1,0 +1,45 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WxPlatformAuthorize.WebAPI", "WxPlatformAuthorize.WebAPI\WxPlatformAuthorize.WebAPI.csproj", "{CBA3E10D-B3A6-4318-93BD-A6C46B7A372C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WxPlatformAuthorize.Service", "WxPlatformAuthorize.Service\WxPlatformAuthorize.Service.csproj", "{D765188E-FF2E-4DCB-96B5-392246614D03}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WxPlatformAuthorize.WxSDK", "WxPlatformAuthorize.WxSDK\WxPlatformAuthorize.WxSDK.csproj", "{940279CE-27F8-4F96-BD00-425CAEF873A3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{D0CF4FB9-8202-4A36-962A-8D9D5558CA19}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WxPlatformAuthorize.WebAPI.Test", "WxPlatformAuthorize.WebAPI.Test\WxPlatformAuthorize.WebAPI.Test.csproj", "{5FB7EC40-07E0-495D-8901-28663142102C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CBA3E10D-B3A6-4318-93BD-A6C46B7A372C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBA3E10D-B3A6-4318-93BD-A6C46B7A372C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBA3E10D-B3A6-4318-93BD-A6C46B7A372C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBA3E10D-B3A6-4318-93BD-A6C46B7A372C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D765188E-FF2E-4DCB-96B5-392246614D03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D765188E-FF2E-4DCB-96B5-392246614D03}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D765188E-FF2E-4DCB-96B5-392246614D03}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D765188E-FF2E-4DCB-96B5-392246614D03}.Release|Any CPU.Build.0 = Release|Any CPU
+		{940279CE-27F8-4F96-BD00-425CAEF873A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{940279CE-27F8-4F96-BD00-425CAEF873A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{940279CE-27F8-4F96-BD00-425CAEF873A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{940279CE-27F8-4F96-BD00-425CAEF873A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5FB7EC40-07E0-495D-8901-28663142102C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5FB7EC40-07E0-495D-8901-28663142102C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5FB7EC40-07E0-495D-8901-28663142102C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5FB7EC40-07E0-495D-8901-28663142102C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5FB7EC40-07E0-495D-8901-28663142102C} = {D0CF4FB9-8202-4A36-962A-8D9D5558CA19}
+	EndGlobalSection
+EndGlobal
