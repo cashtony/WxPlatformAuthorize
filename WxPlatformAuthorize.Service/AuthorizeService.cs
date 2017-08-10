@@ -9,9 +9,9 @@ namespace WxPlatformAuthorize.Service
 {
     public class AuthorizeService
     {
-        private WxSDK.IApiClient _wxApi;
+        private WxSDK.WxApiClient _wxApi;
         private string _verifyTicket;
-        public AuthorizeService(WxSDK.IApiClient wxApi)
+        public AuthorizeService(WxSDK.WxApiClient wxApi)
         {
             _wxApi = wxApi;
         }
@@ -23,20 +23,12 @@ namespace WxPlatformAuthorize.Service
 
         public string GetAccessToken()
         {
-            var componentToken = _wxApi.GetComponentToken(new WxSDK.Models.GetComponentTokenRequest() {
-                ComponentVerifyTicket = _verifyTicket
-            });
-
-            return componentToken.ComponentAccessToken;
+            return _wxApi.GetComponentToken(_verifyTicket);
         }
 
         public string GetPreAuthCode()
         {
-            var preAuthCode = _wxApi.GetPreAuthCode(GetAccessToken(), new WxSDK.Models.GetPreAuthCodeRequest()
-            {
-
-            });
-            return preAuthCode.PreAuthCode;
+            return _wxApi.GetPreAuthCode(GetAccessToken());
         }
     }
 }
