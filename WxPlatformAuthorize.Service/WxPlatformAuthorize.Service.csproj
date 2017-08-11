@@ -42,7 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AuthorizeService.cs" />
-    <Compile Include="Models\ComponentVerifyTicketDto.cs" />
+    <Compile Include="Models\EventParameter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

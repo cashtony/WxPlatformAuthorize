@@ -1,8 +1,6 @@
 ﻿using System.Net.Http;
 using System.Web.Http;
-using System.Xml.Serialization;
 using WxPlatformAuthorize.Service;
-using WxPlatformAuthorize.Service.Models;
 
 namespace WxPlatformAuthorize.WebAPI.Controllers
 {
@@ -14,16 +12,12 @@ namespace WxPlatformAuthorize.WebAPI.Controllers
         {
             _authorizeService = authorizeService;
         }
-        [HttpPost, Route("component_verify_ticket")]
-        public string UpdateComponentVerifyTicket(HttpRequestMessage request)
+
+        [HttpPost, Route("event")]
+        public void HandleNotifyEvent(HttpRequestMessage request)
         {
-            using (var xml = request.Content.ReadAsStreamAsync().Result)
-            {
-                var serializer = new XmlSerializer(typeof(ComponentVerifyTicketDto));
-                var ticket = serializer.Deserialize(xml) as ComponentVerifyTicketDto;
-                _authorizeService.RefreshComponentVerifyTicket(ticket);
-                return ticket.ComponentVerifyTicket;
-            }
+            var xml = request.Content.ReadAsStringAsync().Result;
+            _authorizeService.HandleNotifyEvent(xml);
         }
     }
 }

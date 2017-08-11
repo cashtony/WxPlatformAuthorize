@@ -88,8 +88,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="UnitTestBase.cs" />
-    <Compile Include="UnitTest.cs" />
+    <Compile Include="IntegrateTestBase.cs" />
+    <Compile Include="IntegrateTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

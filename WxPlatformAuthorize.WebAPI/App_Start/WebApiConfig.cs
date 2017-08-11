@@ -29,7 +29,7 @@ namespace WxPlatformAuthorize.WebAPI
         {
             var builder = new ContainerBuilder();
             registerHandler(builder);
-            builder.RegisterApiControllers(typeof(Controllers.DevController).Assembly);
+            builder.RegisterApiControllers(typeof(Controllers.DebugController).Assembly);
             var container = builder.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
             config.DependencyResolver = new AutofacWebApiDependencyResolver(container);

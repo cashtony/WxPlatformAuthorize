@@ -6,7 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace WxPlatformAuthorize.WebAPI.Test
 {
     [TestClass]
-    public class UnitTest: UnitTestBase
+    public class IntegrateTest : IntegrateTestBase
     {
         private const string BaseAddress = "http://localhost:57212";
 
@@ -17,7 +17,7 @@ namespace WxPlatformAuthorize.WebAPI.Test
             var verifyTicket = @"<xml>
 <AppId></AppId>
 <CreateTime>1413192605 </CreateTime>
-<InfoType> </InfoType>
+<InfoType>component_verify_ticket</InfoType>
 <ComponentVerifyTicket>_TestComponentVerifyTicket_</ComponentVerifyTicket>
 </xml>";
 
@@ -32,7 +32,7 @@ namespace WxPlatformAuthorize.WebAPI.Test
 
         private void UpdateVerifyTicket(string verifyTicket)
         {
-            var url = $"{BaseAddress}/api/notify/component_verify_ticket";
+            var url = $"{BaseAddress}/api/notify/event";
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, url)
             {
                 Content = new StringContent(verifyTicket, Encoding.UTF8, "application/xml")

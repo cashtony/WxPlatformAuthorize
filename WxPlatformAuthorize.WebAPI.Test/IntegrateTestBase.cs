@@ -7,7 +7,7 @@ using WxPlatformAuthorize.Service;
 
 namespace WxPlatformAuthorize.WebAPI.Test
 {
-    public class UnitTestBase : WxSDK.IHttpClient
+    public class IntegrateTestBase : WxSDK.IHttpClient
     {
         private HttpMessageInvoker _messageInvoker;
 
@@ -15,7 +15,7 @@ namespace WxPlatformAuthorize.WebAPI.Test
 
         public object GlobalConfiguration { get; private set; }
 
-        public UnitTestBase()
+        public IntegrateTestBase()
         {
             HttpConfiguration config = new HttpConfiguration();
             WebApiConfig.RegisterAutofac(config, RegisterTypes);

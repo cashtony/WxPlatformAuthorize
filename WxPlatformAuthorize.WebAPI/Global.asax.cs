@@ -14,6 +14,11 @@ namespace WxPlatformAuthorize.WebAPI
 
         private void RegisterTypes(ContainerBuilder builder)
         {
+            builder.RegisterInstance(new WxSDK.WxApiClientConfig()
+            {
+                ComponentAppId = "_TestComponentAppId_",
+                ComponentAppSecret = "_TestComponentAppSecret_"
+            });
             builder.RegisterType<WxSDK.HttpClient>().As<WxSDK.IHttpClient>();
             builder.RegisterType<WxSDK.WxApiClient>();
             builder.RegisterType<AuthorizeService>().SingleInstance();

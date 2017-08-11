@@ -4,7 +4,7 @@ using System.Xml.Serialization;
 namespace WxPlatformAuthorize.Service.Models
 {
     [XmlRoot("xml")]
-    public class ComponentVerifyTicketDto
+    internal class EventParameter
     {
         /// <summary>
         /// 第三方平台appid
@@ -17,7 +17,7 @@ namespace WxPlatformAuthorize.Service.Models
         [DataMember]
         public string CreateTime { set; get; }
         /// <summary>
-        /// component_verify_ticket
+        /// 事件类型
         /// </summary>
         [DataMember]
         public string InfoType { set; get; }
@@ -26,5 +26,20 @@ namespace WxPlatformAuthorize.Service.Models
         /// </summary>
         [DataMember]
         public string ComponentVerifyTicket { set; get; }
+        /// <summary>
+        /// 公众号或小程序
+        /// </summary>
+        [DataMember]
+        public string AuthorizerAppid { set; get; }
+        /// <summary>
+        /// 授权码，可用于换取公众号的接口调用凭据
+        /// </summary>
+        [DataMember]
+        public string AuthorizationCode { set; get; }
+        /// <summary>
+        /// 授权码过期时间
+        /// </summary>
+        [DataMember]
+        public string AuthorizationCodeExpiredTime { set; get; }
     }
 }
