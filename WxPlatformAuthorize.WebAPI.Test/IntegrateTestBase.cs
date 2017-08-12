@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Net.Http;
 using System.Threading;
 using System.Web.Http;
@@ -30,11 +31,10 @@ namespace WxPlatformAuthorize.WebAPI.Test
         {
             builder.RegisterInstance(new WxSDK.WxApiClientConfig()
             {
-                ComponentAppId = "_TestComponentAppId_",
-                ComponentAppSecret = "_TestComponentAppSecret_"
+                ComponentAppId = ConfigurationManager.AppSettings["WxSDK.ComponentAppId"],
+                ComponentAppSecret = ConfigurationManager.AppSettings["WxSDK.ComponentAppSecret"]
             });
-            //builder.RegisterInstance(this).As<WxSDK.IHttpClient>();
-            builder.RegisterType<WxSDK.HttpClient>().As<WxSDK.IHttpClient>();
+            builder.RegisterInstance(this).As<WxSDK.IHttpClient>();
             builder.RegisterType<WxSDK.WxApiClient>();
             builder.RegisterType<AuthorizeService>().SingleInstance();
         }
@@ -46,6 +46,10 @@ namespace WxPlatformAuthorize.WebAPI.Test
 
         public string Post(string url, string body)
         {
+            if(OnMockWxServerRequest == null)
+            {
+                throw new NotImplementedException($"{nameof(OnMockWxServerRequest)} is not set");
+            }
             return OnMockWxServerRequest(url, body);
         }
     }

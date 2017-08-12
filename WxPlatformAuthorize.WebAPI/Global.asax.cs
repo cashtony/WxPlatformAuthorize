@@ -1,4 +1,5 @@
-﻿using System.Web.Http;
+﻿using System.Configuration;
+using System.Web.Http;
 using Autofac;
 using WxPlatformAuthorize.Service;
 
@@ -16,8 +17,8 @@ namespace WxPlatformAuthorize.WebAPI
         {
             builder.RegisterInstance(new WxSDK.WxApiClientConfig()
             {
-                ComponentAppId = "_TestComponentAppId_",
-                ComponentAppSecret = "_TestComponentAppSecret_"
+                ComponentAppId = ConfigurationManager.AppSettings["WxSDK.ComponentAppId"],
+                ComponentAppSecret = ConfigurationManager.AppSettings["WxSDK.ComponentAppSecret"]
             });
             builder.RegisterType<WxSDK.HttpClient>().As<WxSDK.IHttpClient>();
             builder.RegisterType<WxSDK.WxApiClient>();
