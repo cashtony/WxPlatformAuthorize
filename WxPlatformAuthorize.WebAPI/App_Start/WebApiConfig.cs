@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Autofac;
 using Autofac.Integration.Mvc;
 using Autofac.Integration.WebApi;
+using WxPlatformAuthorize.WebAPI.Filters;
 
 namespace WxPlatformAuthorize.WebAPI
 {
@@ -14,6 +15,7 @@ namespace WxPlatformAuthorize.WebAPI
         public static void Register(HttpConfiguration config)
         {
             // Web API configuration and services
+            config.Filters.Add(new WebApiExceptionFilterAttribute());
 
             // Web API routes
             config.MapHttpAttributeRoutes();

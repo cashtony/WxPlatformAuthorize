@@ -4,7 +4,7 @@ using System.Xml.Serialization;
 namespace WxPlatformAuthorize.Service.Models
 {
     [XmlRoot("xml")]
-    internal class EventParameter
+    public class EventParameter
     {
         /// <summary>
         /// 第三方平台appid

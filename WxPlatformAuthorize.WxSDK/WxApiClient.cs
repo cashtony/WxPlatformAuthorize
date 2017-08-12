@@ -25,7 +25,7 @@ namespace WxPlatformAuthorize.WxSDK
             var responseBody = _http.Post(url, requestBody);
             var response = JsonConvert.DeserializeObject<ComponentTokenResponse>(responseBody);
 
-            if (!String.IsNullOrEmpty(response.ErrCode))
+            if (response.HasError)
             {
                 throw new Exception($"{response.ErrCode}:{response.ErrMsg}");
             }
@@ -42,7 +42,7 @@ namespace WxPlatformAuthorize.WxSDK
             var responseBody = _http.Post(url, requestBody);
             var response = JsonConvert.DeserializeObject<PreAuthCodeResponse>(responseBody);
 
-            if (!String.IsNullOrEmpty(response.ErrCode))
+            if (response.HasError)
             {
                 throw new Exception($"{response.ErrCode}:{response.ErrMsg}");
             }

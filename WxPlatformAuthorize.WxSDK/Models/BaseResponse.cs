@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using Newtonsoft.Json;
 
 namespace WxPlatformAuthorize.WxSDK.Models
 {
@@ -19,5 +20,14 @@ namespace WxPlatformAuthorize.WxSDK.Models
         /// </summary>
         [JsonProperty(PropertyName = "errmsg")]
         public string ErrMsg { set; get; }
+
+        public bool HasError
+        {
+            get
+            {
+                return !String.IsNullOrEmpty(ErrCode)
+                    || !String.IsNullOrEmpty(ErrMsg);
+            }
+        }
     }
 }

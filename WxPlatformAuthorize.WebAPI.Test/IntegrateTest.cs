@@ -1,7 +1,9 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using WxPlatformAuthorize.WebAPI.Models;
 
 namespace WxPlatformAuthorize.WebAPI.Test
 {
@@ -22,7 +24,7 @@ namespace WxPlatformAuthorize.WebAPI.Test
 </xml>";
 
             OnMockWxServerRequest = (url, body) => {
-                throw new System.Exception();
+                throw new Exception();
             };
             //Act
             UpdateVerifyTicket(verifyTicket);
@@ -30,29 +32,40 @@ namespace WxPlatformAuthorize.WebAPI.Test
             //Assert
         }
 
-        private void UpdateVerifyTicket(string verifyTicket)
+        [TestMethod]
+        public void TestGetPreAuthCodeWithoutVerifyTicket()
         {
-            var url = $"{BaseAddress}/api/notify/event";
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, url)
-            {
-                Content = new StringContent(verifyTicket, Encoding.UTF8, "application/xml")
-            };
+            //Arrange
+            //Act
+            var response = GetPreAuthCode();
 
-            using (HttpResponseMessage response = SendInMemoryHttpRequest(request))
-            {
-                Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
-            }
+            //Assert
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.BadRequest);
+            var responseContent = response.Content.ReadAsStringAsync().Result;
+            Assert.IsTrue(responseContent.Contains("未收到component_verify_ticket推送，10分钟后再试"));
+
+            response.Dispose();
         }
 
-        private void GetPreAuthCode()
+        private HttpResponseMessage UpdateVerifyTicket(string verifyTicket)
         {
-            var url = $"{BaseAddress}/api/authorize/pre_auth_code";
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, url);
-
-            using (HttpResponseMessage response = SendInMemoryHttpRequest(request))
+            HttpRequestMessage request = new HttpRequestMessage()
             {
-                Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
-            }
+                RequestUri = new Uri($"{BaseAddress}/api/notify/event"),
+                Method = HttpMethod.Post,
+                Content = new StringContent(verifyTicket, Encoding.UTF8, "application/xml")
+            };
+            return SendInMemoryHttpRequest(request);
+        }
+
+        private HttpResponseMessage GetPreAuthCode()
+        {
+            HttpRequestMessage request = new HttpRequestMessage()
+            {
+                RequestUri = new Uri($"{BaseAddress}/api/authorize/pre_auth_code"),
+                Method = HttpMethod.Get,
+            };
+            return SendInMemoryHttpRequest(request);
         }
     }
 }

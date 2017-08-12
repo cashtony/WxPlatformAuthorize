@@ -1,6 +1,8 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
 using System.Web.Http;
 using WxPlatformAuthorize.Service;
+using WxPlatformAuthorize.WebAPI.Models;
 
 namespace WxPlatformAuthorize.WebAPI.Controllers
 {
@@ -14,10 +16,19 @@ namespace WxPlatformAuthorize.WebAPI.Controllers
         }
 
         [HttpPost, Route("event")]
-        public void HandleNotifyEvent(HttpRequestMessage request)
+        public BaseResponse HandleNotifyEvent(HttpRequestMessage request)
         {
-            var xml = request.Content.ReadAsStringAsync().Result;
-            _authorizeService.HandleNotifyEvent(xml);
+            try
+            {
+                var xml = request.Content.ReadAsStringAsync().Result;
+                _authorizeService.HandleNotifyEvent(xml);
+            }
+            catch (Exception e)
+            {
+
+            }
+
+            return new BaseResponse();
         }
     }
 }

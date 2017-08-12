@@ -33,7 +33,8 @@ namespace WxPlatformAuthorize.WebAPI.Test
                 ComponentAppId = "_TestComponentAppId_",
                 ComponentAppSecret = "_TestComponentAppSecret_"
             });
-            builder.RegisterInstance(this).As<WxSDK.IHttpClient>();
+            //builder.RegisterInstance(this).As<WxSDK.IHttpClient>();
+            builder.RegisterType<WxSDK.HttpClient>().As<WxSDK.IHttpClient>();
             builder.RegisterType<WxSDK.WxApiClient>();
             builder.RegisterType<AuthorizeService>().SingleInstance();
         }
