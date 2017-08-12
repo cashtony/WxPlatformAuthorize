@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using WxPlatformAuthorize.Service;
+using WxPlatformAuthorize.WebAPI.Models;
 
 namespace WxPlatformAuthorize.WebAPI.Controllers
 {
@@ -17,16 +18,16 @@ namespace WxPlatformAuthorize.WebAPI.Controllers
             _authorizeService = authorizeService;
         }
 
-        [HttpGet, Route("pre_auth_code")]
-        public string GetPreAuthCode()
+        [HttpGet, Route("access_token")]
+        public AccessTokenResponse GetAccessToken()
         {
-            return _authorizeService.GetPreAuthCode();
+            return new AccessTokenResponse() { AccessToken = _authorizeService.GetAccessToken() };
         }
 
-        [HttpGet, Route("access_token")]
-        public string GetAccessToken()
+        [HttpGet, Route("pre_auth_code")]
+        public PreAuthCodeResponse GetPreAuthCode()
         {
-            return _authorizeService.GetAccessToken();
+            return new PreAuthCodeResponse() { PreAuthCode = _authorizeService.GetPreAuthCode() };
         }
     }
 }

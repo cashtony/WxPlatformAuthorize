@@ -122,8 +122,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AccessTokenResponse.cs" />
     <Compile Include="Models\BaseResponse.cs" />
     <Compile Include="Models\ErrorResponse.cs" />
+    <Compile Include="Models\PreAuthCodeResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

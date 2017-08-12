@@ -13,13 +13,40 @@ namespace WxPlatformAuthorize.WebAPI.Test
     {
         private const string BaseAddress = "http://localhost:57212";
         private const string VerifyTicket = "_TestComponentVerifyTicket_";
-        private const string VerifyTicketXMLTemplate = @"<xml>
+        private const string VerifyTicketXMLTemplate =
+@"<xml>
 <AppId></AppId>
 <CreateTime>1413192605 </CreateTime>
 <InfoType>component_verify_ticket</InfoType>
 <ComponentVerifyTicket>{0}</ComponentVerifyTicket>
 </xml>";
+
         private readonly string VerifyTicketXML = String.Format(VerifyTicketXMLTemplate, VerifyTicket);
+
+        [TestMethod]
+        public void TestGetAccessToken()
+        {
+            //Arrange
+            OnMockWxServerRequest = (url, body) => {
+                if (url.StartsWith("https://api.weixin.qq.com/cgi-bin/component/api_component_token"))
+                {
+                    return
+@"{
+""component_access_token"":""61W3mEpU66027wgNZ_MhGHNQDHnFATkDa9-2llqrMBjUwxRSNPbVsMmyD-yq8wZETSoE5NQgecigDrSHkPtIYA"", 
+""expires_in"":7200
+}";
+                }
+                throw new Exception();
+            };
+            //Act
+            UpdateVerifyTicket(VerifyTicketXML);
+            var response = GetAccessToken();
+            //Assert
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            var responseContent = JsonConvert.DeserializeObject<AccessTokenResponse>(response.Content.ReadAsStringAsync().Result);
+            Assert.IsTrue(responseContent.Success);
+            Assert.AreEqual(responseContent.AccessToken, "61W3mEpU66027wgNZ_MhGHNQDHnFATkDa9-2llqrMBjUwxRSNPbVsMmyD-yq8wZETSoE5NQgecigDrSHkPtIYA");
+        }
 
         [TestMethod]
         public void TestGetPreAuthCode()
@@ -28,18 +55,30 @@ namespace WxPlatformAuthorize.WebAPI.Test
             OnMockWxServerRequest = (url, body) => {
                 if(url.StartsWith("https://api.weixin.qq.com/cgi-bin/component/api_component_token"))
                 {
-                    var obj = JsonConvert.DeserializeObject(body);
+                    return
+@"{
+""component_access_token"":""61W3mEpU66027wgNZ_MhGHNQDHnFATkDa9-2llqrMBjUwxRSNPbVsMmyD-yq8wZETSoE5NQgecigDrSHkPtIYA"", 
+""expires_in"":7200
+}";
                 }
                 else if (url.StartsWith("https://api.weixin.qq.com/cgi-bin/component/api_create_preauthcode"))
                 {
-
+                    return
+@"{
+""pre_auth_code"":""Cx_Dk6qiBE0Dmx4EmlT3oRfArPvwSQ-oa3NL_fwHM7VI08r52wazoZX2Rhpz1dEw"",
+""expires_in"":600
+}";
                 }
                 throw new Exception();
             };
             //Act
             UpdateVerifyTicket(VerifyTicketXML);
-            GetPreAuthCode();
+            var response = GetPreAuthCode();
             //Assert
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            var responseContent = JsonConvert.DeserializeObject<PreAuthCodeResponse>(response.Content.ReadAsStringAsync().Result);
+            Assert.IsTrue(responseContent.Success);
+            Assert.AreEqual(responseContent.PreAuthCode, "Cx_Dk6qiBE0Dmx4EmlT3oRfArPvwSQ-oa3NL_fwHM7VI08r52wazoZX2Rhpz1dEw");
         }
 
         [TestMethod]
@@ -64,6 +103,16 @@ namespace WxPlatformAuthorize.WebAPI.Test
                 RequestUri = new Uri($"{BaseAddress}/api/notify/event"),
                 Method = HttpMethod.Post,
                 Content = new StringContent(verifyTicket, Encoding.UTF8, "application/xml")
+            };
+            return SendInMemoryHttpRequest(request);
+        }
+
+        private HttpResponseMessage GetAccessToken()
+        {
+            HttpRequestMessage request = new HttpRequestMessage()
+            {
+                RequestUri = new Uri($"{BaseAddress}/api/authorize/access_token"),
+                Method = HttpMethod.Get,
             };
             return SendInMemoryHttpRequest(request);
         }
