@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Configuration;
+using System.IO;
 using System.Net.Http;
 using System.Threading;
 using System.Web.Http;
@@ -19,7 +20,7 @@ namespace WxPlatformAuthorize.WebAPI.Test
         public IntegrateTestBase()
         {
             HttpConfiguration config = new HttpConfiguration();
-            WebApiConfig.RegisterAutofac(config, RegisterTypes);
+            WebApiConfig.RegisterAutofac(config, RegisterServices);
             WebApiConfig.Register(config);
             config.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always;
             HttpServer server = new HttpServer(config);
@@ -27,8 +28,10 @@ namespace WxPlatformAuthorize.WebAPI.Test
 
         }
 
-        private void RegisterTypes(ContainerBuilder builder)
+        private void RegisterServices(ContainerBuilder builder)
         {
+            log4net.Config.XmlConfigurator.ConfigureAndWatch(new FileInfo("..\\..\\..\\WxPlatformAuthorize.WebAPI\\log4net.config"));
+            builder.RegisterInstance(log4net.LogManager.GetLogger("WxPlatformAuthorize")).As<log4net.ILog>().SingleInstance();
             builder.RegisterInstance(new WxSDK.WxApiClientConfig()
             {
                 ComponentAppId = ConfigurationManager.AppSettings["WxSDK.ComponentAppId"],

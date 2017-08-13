@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Autofac;
 using Autofac.Integration.Mvc;
 using Autofac.Integration.WebApi;
+using WxPlatformAuthorize.WebAPI.Controllers;
 using WxPlatformAuthorize.WebAPI.Filters;
 
 namespace WxPlatformAuthorize.WebAPI
@@ -15,7 +16,6 @@ namespace WxPlatformAuthorize.WebAPI
         public static void Register(HttpConfiguration config)
         {
             // Web API configuration and services
-            config.Filters.Add(new WebApiExceptionFilterAttribute());
 
             // Web API routes
             config.MapHttpAttributeRoutes();
@@ -27,11 +27,23 @@ namespace WxPlatformAuthorize.WebAPI
             );
         }
 
-        public static void RegisterAutofac(HttpConfiguration config, Action<ContainerBuilder> registerHandler)
+        public static void RegisterAutofac(HttpConfiguration config, Action<ContainerBuilder> registerServices)
         {
             var builder = new ContainerBuilder();
-            registerHandler(builder);
+
+            //Register services
+            registerServices(builder);
+
+            //Register filters
+            builder.RegisterWebApiFilterProvider(config);
+            builder.RegisterType<WebApiExceptionFilterAttribute>().AsWebApiExceptionFilterFor<AuthorizeController>();
+            builder.RegisterType<WebApiExceptionFilterAttribute>().AsWebApiExceptionFilterFor<NotifyController>();
+            builder.RegisterType<WebApiExceptionFilterAttribute>().AsWebApiExceptionFilterFor<DebugController>();
+
+            //Register controllers
             builder.RegisterApiControllers(typeof(Controllers.DebugController).Assembly);
+
+            //Set resolver
             var container = builder.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
             config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
