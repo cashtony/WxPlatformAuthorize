@@ -35,7 +35,9 @@ namespace WxPlatformAuthorize.WebAPI.Test
             builder.RegisterInstance(new WxSDK.WxApiClientConfig()
             {
                 ComponentAppId = ConfigurationManager.AppSettings["WxSDK.ComponentAppId"],
-                ComponentAppSecret = ConfigurationManager.AppSettings["WxSDK.ComponentAppSecret"]
+                ComponentAppSecret = ConfigurationManager.AppSettings["WxSDK.ComponentAppSecret"],
+                Token = ConfigurationManager.AppSettings["WxSDK.Token"],
+                EncodingAESKey = ConfigurationManager.AppSettings["WxSDK.EncodingAESKey"]
             });
             builder.RegisterInstance(this).As<WxSDK.IHttpClient>();
             builder.RegisterType<WxSDK.WxApiClient>();

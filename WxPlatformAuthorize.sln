@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WxPlatformAuthorize.WebAPI.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tencent", "Tencent\Tencent.csproj", "{99BC24BB-01D8-4786-B958-28E0E8A9C807}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tencent.Test", "Tencent.Test\Tencent.Test.csproj", "{B573DDCC-AFE7-42AA-BC42-17EBA663228B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{99BC24BB-01D8-4786-B958-28E0E8A9C807}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{99BC24BB-01D8-4786-B958-28E0E8A9C807}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{99BC24BB-01D8-4786-B958-28E0E8A9C807}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B573DDCC-AFE7-42AA-BC42-17EBA663228B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B573DDCC-AFE7-42AA-BC42-17EBA663228B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B573DDCC-AFE7-42AA-BC42-17EBA663228B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B573DDCC-AFE7-42AA-BC42-17EBA663228B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

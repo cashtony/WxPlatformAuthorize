@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
 using WxPlatformAuthorize.Service.Models;
 
@@ -17,8 +13,10 @@ namespace WxPlatformAuthorize.Service
         {
             _wxApi = wxApi;
         }
-        public void HandleNotifyEvent(string xml)
+        public void HandleNotifyEvent(string msgSignature, string timeStamp, string nonce, string postData)
         {
+            var xml = _wxApi.DecryptMessage(msgSignature, timeStamp, nonce, postData);
+
             using (var reader = new StringReader(xml))
             {
                 var serializer = new XmlSerializer(typeof(EventParameter));

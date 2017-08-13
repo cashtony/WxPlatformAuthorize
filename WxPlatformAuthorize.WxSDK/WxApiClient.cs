@@ -13,6 +13,19 @@ namespace WxPlatformAuthorize.WxSDK
             _http = http;
             _config = config;
         }
+
+        public string DecryptMessage(string msgSignature, string timeStamp, string nonce, string data)
+        {
+            string msg = "";
+            Tencent.WXBizMsgCrypt wxcpt = new Tencent.WXBizMsgCrypt(_config.Token, _config.EncodingAESKey, _config.ComponentAppId);
+            int ret = wxcpt.DecryptMsg(msgSignature, timeStamp, nonce, data, ref msg);
+            if(ret != 0)
+            {
+                throw new Exception($"{nameof(WxApiClient)}.{nameof(DecryptMessage)} ERR: Decrypt fail, ret: {ret}");
+            }
+            return msg;
+        }
+
         public string GetComponentToken(string verifyTicket)
         {
             var url = "https://api.weixin.qq.com/cgi-bin/component/api_component_token";
