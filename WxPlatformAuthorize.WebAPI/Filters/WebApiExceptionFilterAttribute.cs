@@ -16,7 +16,7 @@ namespace WxPlatformAuthorize.WebAPI.Filters
         }
         public override void OnException(HttpActionExecutedContext actionExecutedContext)
         {
-            _log.Error("WebAPI Exception", actionExecutedContext.Exception);
+            _log.Error("WebAPIController Exception", actionExecutedContext.Exception);
             var responseBody = new ErrorResponse(actionExecutedContext.Exception.Message);
             var response = new HttpResponseMessage()
             {

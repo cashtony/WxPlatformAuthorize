@@ -10,13 +10,15 @@ namespace WxPlatformAuthorize.WebAPI.Controllers
     public class NotifyController : ApiController
     {
         private AuthorizeService _authorizeService;
-        public NotifyController(AuthorizeService authorizeService)
+        private log4net.ILog _log;
+        public NotifyController(AuthorizeService authorizeService, log4net.ILog log)
         {
             _authorizeService = authorizeService;
+            _log = log;
         }
 
         [HttpPost, Route("event")]
-        public BaseResponse HandleNotifyEvent(HttpRequestMessage request)
+        public HttpResponseMessage HandleNotifyEvent(HttpRequestMessage request)
         {
             try
             {
@@ -25,10 +27,14 @@ namespace WxPlatformAuthorize.WebAPI.Controllers
             }
             catch (Exception e)
             {
-
+                _log.Error("推送事件处理异常", e);
             }
 
-            return new BaseResponse();
+            return new HttpResponseMessage()
+            {
+                StatusCode = System.Net.HttpStatusCode.OK,
+                Content = new StringContent("success")
+            };
         }
     }
 }

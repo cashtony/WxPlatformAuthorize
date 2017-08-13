@@ -22,7 +22,20 @@ namespace WxPlatformAuthorize.WebAPI.Test
 </xml>";
 
         private readonly string VerifyTicketXML = String.Format(VerifyTicketXMLTemplate, VerifyTicket);
+        [TestMethod]
+        public void TestUpdateVerifyTicket()
+        {
+            //Arrange
+            //Act
+            var response = UpdateVerifyTicket(VerifyTicketXML);
 
+            //Assert
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            var responseContent = response.Content.ReadAsStringAsync().Result;
+            Assert.AreEqual("success", responseContent);
+            response.Dispose();
+
+        }
         [TestMethod]
         public void TestGetAccessToken()
         {
@@ -42,10 +55,10 @@ namespace WxPlatformAuthorize.WebAPI.Test
             UpdateVerifyTicket(VerifyTicketXML);
             var response = GetAccessToken();
             //Assert
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
             var responseContent = JsonConvert.DeserializeObject<AccessTokenResponse>(response.Content.ReadAsStringAsync().Result);
             Assert.IsTrue(responseContent.Success);
-            Assert.AreEqual(responseContent.AccessToken, "61W3mEpU66027wgNZ_MhGHNQDHnFATkDa9-2llqrMBjUwxRSNPbVsMmyD-yq8wZETSoE5NQgecigDrSHkPtIYA");
+            Assert.AreEqual("61W3mEpU66027wgNZ_MhGHNQDHnFATkDa9-2llqrMBjUwxRSNPbVsMmyD-yq8wZETSoE5NQgecigDrSHkPtIYA", responseContent.AccessToken);
         }
 
         [TestMethod]
@@ -75,10 +88,10 @@ namespace WxPlatformAuthorize.WebAPI.Test
             UpdateVerifyTicket(VerifyTicketXML);
             var response = GetPreAuthCode();
             //Assert
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
             var responseContent = JsonConvert.DeserializeObject<PreAuthCodeResponse>(response.Content.ReadAsStringAsync().Result);
             Assert.IsTrue(responseContent.Success);
-            Assert.AreEqual(responseContent.PreAuthCode, "Cx_Dk6qiBE0Dmx4EmlT3oRfArPvwSQ-oa3NL_fwHM7VI08r52wazoZX2Rhpz1dEw");
+            Assert.AreEqual("Cx_Dk6qiBE0Dmx4EmlT3oRfArPvwSQ-oa3NL_fwHM7VI08r52wazoZX2Rhpz1dEw", responseContent.PreAuthCode);
         }
 
         [TestMethod]
