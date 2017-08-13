@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WxPlatformAuthorize.WxSDK",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WxPlatformAuthorize.WebAPI.Test", "WxPlatformAuthorize.WebAPI.Test\WxPlatformAuthorize.WebAPI.Test.csproj", "{5FB7EC40-07E0-495D-8901-28663142102C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tencent", "Tencent\Tencent.csproj", "{99BC24BB-01D8-4786-B958-28E0E8A9C807}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{5FB7EC40-07E0-495D-8901-28663142102C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5FB7EC40-07E0-495D-8901-28663142102C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5FB7EC40-07E0-495D-8901-28663142102C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99BC24BB-01D8-4786-B958-28E0E8A9C807}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99BC24BB-01D8-4786-B958-28E0E8A9C807}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99BC24BB-01D8-4786-B958-28E0E8A9C807}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99BC24BB-01D8-4786-B958-28E0E8A9C807}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

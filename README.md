@@ -8,3 +8,5 @@
 封装微信API。
 ## WxPlatformAuthorize.WebAPI.Test
 测试项目。
+## Tencent
+腾讯提供的消息加解密
