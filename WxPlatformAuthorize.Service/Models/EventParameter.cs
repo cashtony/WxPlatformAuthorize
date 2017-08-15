@@ -15,7 +15,7 @@ namespace WxPlatformAuthorize.Service.Models
         /// 时间戳
         /// </summary>
         [DataMember]
-        public string CreateTime { set; get; }
+        public long CreateTime { set; get; }
         /// <summary>
         /// 事件类型
         /// </summary>

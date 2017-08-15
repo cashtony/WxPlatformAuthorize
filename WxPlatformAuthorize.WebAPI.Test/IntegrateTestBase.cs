@@ -32,6 +32,8 @@ namespace WxPlatformAuthorize.WebAPI.Test
         {
             log4net.Config.XmlConfigurator.ConfigureAndWatch(new FileInfo("..\\..\\..\\WxPlatformAuthorize.WebAPI\\log4net.config"));
             builder.RegisterInstance(log4net.LogManager.GetLogger("WxPlatformAuthorize")).As<log4net.ILog>().SingleInstance();
+
+            builder.RegisterType<Repository.SqliteRepository>().As<Repository.IRepository>().SingleInstance();
             builder.RegisterInstance(new WxSDK.WxApiClientConfig()
             {
                 ComponentAppId = ConfigurationManager.AppSettings["WxSDK.ComponentAppId"],

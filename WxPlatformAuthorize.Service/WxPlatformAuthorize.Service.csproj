@@ -49,6 +49,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\WxPlatformAuthorize.Repository\WxPlatformAuthorize.Repository.csproj">
+      <Project>{cfd9c07d-672a-4690-8444-faaf77dbe705}</Project>
+      <Name>WxPlatformAuthorize.Repository</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WxPlatformAuthorize.WxSDK\WxPlatformAuthorize.WxSDK.csproj">
       <Project>{940279ce-27f8-4f96-bd00-425caef873a3}</Project>
       <Name>WxPlatformAuthorize.WxSDK</Name>
