@@ -1,5 +1,6 @@
 ﻿using System.Configuration;
 using System.Data.SQLite;
+using System.Linq;
 using Dapper;
 using Dommel;
 
@@ -24,7 +25,7 @@ namespace WxPlatformAuthorize.Repository
         {
             using (var con = new SQLiteConnection(_connectionString))
             {
-                return con.QueryFirst<T>(sql, param);
+                return con.Query<T>(sql, param).FirstOrDefault();
             }
         }
     }

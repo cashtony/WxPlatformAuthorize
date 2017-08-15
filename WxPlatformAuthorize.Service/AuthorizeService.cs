@@ -50,17 +50,19 @@ namespace WxPlatformAuthorize.Service
 
         public string GetAccessToken()
         {
-            var ticket = _repository.QueryFirst<ComponentVerifyTicket>("select * from ComponentVerifyTickets order by CreateTime desc");
-            //if (String.IsNullOrEmpty(_verifyTicket))
-            //{
-            //    throw new Exception("未收到component_verify_ticket推送，10分钟后再试");
-            //}
-            return _wxApi.GetComponentToken(ticket.VerifyTicket);
+            var ticket = _repository.QueryFirst<ComponentVerifyTicket>("select * from ComponentVerifyTickets order by Id desc");
+            if (ticket == null)
+            {
+                throw new Exception("未收到component_verify_ticket推送，10分钟后再试");
+            }
+            var token = _wxApi.GetComponentToken(ticket.VerifyTicket);
+            return token.ComponentAccessToken;
         }
 
         public string GetPreAuthCode()
         {
-            return _wxApi.GetPreAuthCode(GetAccessToken());
+            var preAuthCode = _wxApi.GetPreAuthCode(GetAccessToken());
+            return preAuthCode.PreAuthCode;
         }
     }
 }

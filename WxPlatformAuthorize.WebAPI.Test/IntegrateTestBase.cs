@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Configuration;
+using System.Data.SQLite;
 using System.IO;
 using System.Net.Http;
 using System.Threading;
@@ -26,11 +27,12 @@ namespace WxPlatformAuthorize.WebAPI.Test
             HttpServer server = new HttpServer(config);
             _messageInvoker = new HttpMessageInvoker(server);
 
+            ResetDatabase();
         }
 
         private void RegisterServices(ContainerBuilder builder)
         {
-            log4net.Config.XmlConfigurator.ConfigureAndWatch(new FileInfo("..\\..\\..\\WxPlatformAuthorize.WebAPI\\log4net.config"));
+            log4net.Config.XmlConfigurator.ConfigureAndWatch(new FileInfo(@"..\..\..\WxPlatformAuthorize.WebAPI\log4net.config"));
             builder.RegisterInstance(log4net.LogManager.GetLogger("WxPlatformAuthorize")).As<log4net.ILog>().SingleInstance();
 
             builder.RegisterType<Repository.SqliteRepository>().As<Repository.IRepository>().SingleInstance();
@@ -58,6 +60,20 @@ namespace WxPlatformAuthorize.WebAPI.Test
                 throw new NotImplementedException($"{nameof(OnMockWxServerRequest)} is not set");
             }
             return OnMockWxServerRequest(url, body);
+        }
+
+        private void ResetDatabase()
+        {
+            var connectionString = ConfigurationManager.ConnectionStrings["sqlite"].ConnectionString;
+            using (var conn = new SQLiteConnection(connectionString))
+            {
+                conn.Open();
+                using (var command = new SQLiteCommand(conn))
+                {
+                    command.CommandText = File.ReadAllText(@"..\..\..\WxPlatformAuthorize.Repository\CreateTables.sql");
+                    command.ExecuteNonQuery();
+                }
+            }
         }
     }
 }

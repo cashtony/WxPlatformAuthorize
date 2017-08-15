@@ -2,7 +2,7 @@
 
 namespace WxPlatformAuthorize.WxSDK.Models
 {
-    internal class ComponentTokenResponse : BaseResponse
+    public class ComponentTokenResponse : BaseResponse
     {
         /// <summary>
         /// 第三方平台access_token

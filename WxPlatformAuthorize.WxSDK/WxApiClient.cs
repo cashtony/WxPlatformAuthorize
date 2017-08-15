@@ -26,7 +26,7 @@ namespace WxPlatformAuthorize.WxSDK
             return msg;
         }
 
-        public string GetComponentToken(string verifyTicket)
+        public ComponentTokenResponse GetComponentToken(string verifyTicket)
         {
             var url = "https://api.weixin.qq.com/cgi-bin/component/api_component_token";
             var requestBody = JsonConvert.SerializeObject(new ComponentTokenRequest()
@@ -42,10 +42,10 @@ namespace WxPlatformAuthorize.WxSDK
             {
                 throw new Exception($"{response.ErrCode}:{response.ErrMsg}");
             }
-            return response.ComponentAccessToken;
+            return response;
         }
 
-        public string GetPreAuthCode(string accessToken)
+        public PreAuthCodeResponse GetPreAuthCode(string accessToken)
         {
             var url = $"https://api.weixin.qq.com/cgi-bin/component/api_create_preauthcode?component_access_token={accessToken}";
             var requestBody = JsonConvert.SerializeObject(new PreAuthCodeRequest()
@@ -59,7 +59,7 @@ namespace WxPlatformAuthorize.WxSDK
             {
                 throw new Exception($"{response.ErrCode}:{response.ErrMsg}");
             }
-            return response.PreAuthCode;
+            return response;
         }
     }
 }

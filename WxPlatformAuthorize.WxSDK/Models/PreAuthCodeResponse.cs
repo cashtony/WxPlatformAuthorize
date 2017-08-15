@@ -2,7 +2,7 @@
 
 namespace WxPlatformAuthorize.WxSDK.Models
 {
-    internal class PreAuthCodeResponse : BaseResponse
+    public class PreAuthCodeResponse : BaseResponse
     {
         /// <summary>
         /// 预授权码

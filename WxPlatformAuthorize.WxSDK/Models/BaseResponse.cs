@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace WxPlatformAuthorize.WxSDK.Models
 {
-    internal class BaseResponse
+    public class BaseResponse
     {
         /// <summary>
         /// 有效期，单位秒
