@@ -38,6 +38,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -46,8 +47,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\Notification\AuthorizeEvent.cs" />
     <Compile Include="Models\BaseRequest.cs" />
     <Compile Include="Models\BaseResponse.cs" />
+    <Compile Include="Models\Notification\AuthorizeEventTypes.cs" />
     <Compile Include="WxApiClientConfig.cs" />
     <Compile Include="WxApiClient.cs" />
     <Compile Include="IHttpClient.cs" />

@@ -1,6 +1,7 @@
-﻿DROP TABLE IF EXISTS ComponentVerifyTickets;
-CREATE TABLE ComponentVerifyTickets(
+﻿DROP TABLE IF EXISTS AuthorizeEventRecords;
+CREATE TABLE AuthorizeEventRecords(
 	Id INTEGER PRIMARY KEY AUTOINCREMENT,
-	VerifyTicket TEXT,
-	CreateTime NUMERIC
+	EventType TEXT,
+	EventXml TEXT,
+	CreateTime DATETIME
 );

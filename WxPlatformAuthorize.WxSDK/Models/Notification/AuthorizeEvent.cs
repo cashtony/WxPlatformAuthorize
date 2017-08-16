@@ -1,10 +1,10 @@
 ﻿using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-namespace WxPlatformAuthorize.Service.Models
+namespace WxPlatformAuthorize.WxSDK.Models.Notification
 {
     [XmlRoot("xml")]
-    public class EventParameter
+    public class AuthorizeEvent
     {
         /// <summary>
         /// 第三方平台appid
@@ -17,7 +17,7 @@ namespace WxPlatformAuthorize.Service.Models
         [DataMember]
         public long CreateTime { set; get; }
         /// <summary>
-        /// 事件类型
+        /// 事件类型，取值参考 AuthorizeEventTypes
         /// </summary>
         [DataMember]
         public string InfoType { set; get; }
