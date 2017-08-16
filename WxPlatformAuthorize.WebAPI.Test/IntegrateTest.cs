@@ -59,6 +59,45 @@ namespace WxPlatformAuthorize.WebAPI.Test
             Assert.IsTrue(responseContent.Success);
             Assert.AreEqual("61W3mEpU66027wgNZ_MhGHNQDHnFATkDa9-2llqrMBjUwxRSNPbVsMmyD-yq8wZETSoE5NQgecigDrSHkPtIYA", responseContent.AccessToken);
         }
+        [TestMethod]
+        public void TestGetAccessToken2Times()
+        {
+            //Arrange
+            int getAccessTokenRequestCount = 0;
+            OnMockWxServerRequest = (url, body) => {
+                if (url.StartsWith("https://api.weixin.qq.com/cgi-bin/component/api_component_token"))
+                {
+                    getAccessTokenRequestCount++;
+                    var obj = JsonConvert.DeserializeObject(body) as JObject;
+                    if (!obj.GetValue("component_verify_ticket").ToString().Equals(VerifyTicket))
+                    {
+                        Assert.Fail("错误的component_verify_ticket");
+                    }
+                    return
+@"{
+""component_access_token"":""61W3mEpU66027wgNZ_MhGHNQDHnFATkDa9-2llqrMBjUwxRSNPbVsMmyD-yq8wZETSoE5NQgecigDrSHkPtIYA"", 
+""expires_in"":7200
+}";
+                }
+                throw new Exception();
+            };
+            //Act
+            UpdateVerifyTicket(VerifyTicketXML);
+            var response1 = GetAccessToken();
+            var response2 = GetAccessToken();
+            //Assert
+            Assert.AreEqual(HttpStatusCode.OK, response1.StatusCode);
+            var responseContent1 = JsonConvert.DeserializeObject<AccessTokenResponse>(response1.Content.ReadAsStringAsync().Result);
+            Assert.IsTrue(responseContent1.Success);
+            Assert.AreEqual("61W3mEpU66027wgNZ_MhGHNQDHnFATkDa9-2llqrMBjUwxRSNPbVsMmyD-yq8wZETSoE5NQgecigDrSHkPtIYA", responseContent1.AccessToken);
+
+            Assert.AreEqual(HttpStatusCode.OK, response2.StatusCode);
+            var responseContent2 = JsonConvert.DeserializeObject<AccessTokenResponse>(response2.Content.ReadAsStringAsync().Result);
+            Assert.IsTrue(responseContent2.Success);
+            Assert.AreEqual("61W3mEpU66027wgNZ_MhGHNQDHnFATkDa9-2llqrMBjUwxRSNPbVsMmyD-yq8wZETSoE5NQgecigDrSHkPtIYA", responseContent2.AccessToken);
+
+            Assert.AreEqual(1, getAccessTokenRequestCount);
+        }
 
         [TestMethod]
         public void TestGetPreAuthCode()
@@ -95,12 +134,66 @@ namespace WxPlatformAuthorize.WebAPI.Test
             };
             //Act
             UpdateVerifyTicket(VerifyTicketXML);
-            var response = GetPreAuthCode();
+            var response1 = GetPreAuthCode();
+            var response2 = GetPreAuthCode();
             //Assert
-            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-            var responseContent = JsonConvert.DeserializeObject<PreAuthCodeResponse>(response.Content.ReadAsStringAsync().Result);
-            Assert.IsTrue(responseContent.Success);
-            Assert.AreEqual("Cx_Dk6qiBE0Dmx4EmlT3oRfArPvwSQ-oa3NL_fwHM7VI08r52wazoZX2Rhpz1dEw", responseContent.PreAuthCode);
+            Assert.AreEqual(HttpStatusCode.OK, response1.StatusCode);
+            var responseContent1 = JsonConvert.DeserializeObject<PreAuthCodeResponse>(response1.Content.ReadAsStringAsync().Result);
+            Assert.IsTrue(responseContent1.Success);
+            Assert.AreEqual("Cx_Dk6qiBE0Dmx4EmlT3oRfArPvwSQ-oa3NL_fwHM7VI08r52wazoZX2Rhpz1dEw", responseContent1.PreAuthCode);
+        }
+
+        [TestMethod]
+        public void TestGetPreAuthCode2Times()
+        {
+            //Arrange
+            int getPreAuthCodeRequestCount = 0;
+            OnMockWxServerRequest = (url, body) => {
+                if (url.StartsWith("https://api.weixin.qq.com/cgi-bin/component/api_component_token"))
+                {
+                    var obj = JsonConvert.DeserializeObject(body) as JObject;
+                    if (!obj.GetValue("component_verify_ticket").ToString().Equals(VerifyTicket))
+                    {
+                        Assert.Fail("错误的component_verify_ticket");
+                    }
+                    return
+@"{
+""component_access_token"":""61W3mEpU66027wgNZ_MhGHNQDHnFATkDa9-2llqrMBjUwxRSNPbVsMmyD-yq8wZETSoE5NQgecigDrSHkPtIYA"", 
+""expires_in"":7200
+}";
+                }
+                else if (url.StartsWith("https://api.weixin.qq.com/cgi-bin/component/api_create_preauthcode"))
+                {
+                    getPreAuthCodeRequestCount++;
+                    var uri = new Uri(url);
+                    if (!uri.ParseQueryString()["component_access_token"].Equals("61W3mEpU66027wgNZ_MhGHNQDHnFATkDa9-2llqrMBjUwxRSNPbVsMmyD-yq8wZETSoE5NQgecigDrSHkPtIYA"))
+                    {
+                        Assert.Fail("错误的component_access_token");
+                    }
+                    return
+@"{
+""pre_auth_code"":""Cx_Dk6qiBE0Dmx4EmlT3oRfArPvwSQ-oa3NL_fwHM7VI08r52wazoZX2Rhpz1dEw"",
+""expires_in"":600
+}";
+                }
+                throw new Exception();
+            };
+            //Act
+            UpdateVerifyTicket(VerifyTicketXML);
+            var response1 = GetPreAuthCode();
+            var response2 = GetPreAuthCode();
+            //Assert
+            Assert.AreEqual(HttpStatusCode.OK, response1.StatusCode);
+            var responseContent1 = JsonConvert.DeserializeObject<PreAuthCodeResponse>(response1.Content.ReadAsStringAsync().Result);
+            Assert.IsTrue(responseContent1.Success);
+            Assert.AreEqual("Cx_Dk6qiBE0Dmx4EmlT3oRfArPvwSQ-oa3NL_fwHM7VI08r52wazoZX2Rhpz1dEw", responseContent1.PreAuthCode);
+
+            Assert.AreEqual(HttpStatusCode.OK, response2.StatusCode);
+            var responseContent2 = JsonConvert.DeserializeObject<PreAuthCodeResponse>(response2.Content.ReadAsStringAsync().Result);
+            Assert.IsTrue(responseContent2.Success);
+            Assert.AreEqual("Cx_Dk6qiBE0Dmx4EmlT3oRfArPvwSQ-oa3NL_fwHM7VI08r52wazoZX2Rhpz1dEw", responseContent2.PreAuthCode);
+
+            Assert.AreEqual(1, getPreAuthCodeRequestCount);
         }
 
         [TestMethod]
